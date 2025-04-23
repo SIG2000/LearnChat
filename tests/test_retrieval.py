@@ -7,5 +7,5 @@ retrieval = Retrieval()
 
 
 def test_retrieve() -> None:
-    retrieved = retrieval.retrieve("minji")
+    retrieved = retrieval.retrieve("igeon")
     assert retrieved is not None
