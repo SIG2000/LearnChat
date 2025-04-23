@@ -40,6 +40,5 @@ class Retrieval:
         except KeyError:
             return None
 
-
     def print_data(self) -> None:
         print(self.data)
