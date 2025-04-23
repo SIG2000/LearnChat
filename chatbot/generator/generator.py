@@ -1,21 +1,15 @@
-import re
 from typing import Iterator
+from llama_cpp import Llama
 
 class Generator:
     def __init__(self) -> None:
-        pass
+        self.llm = Llama.from_pretrained(
+            repo_id="bartowski/DeepSeek-R1-Distill-Qwen-1.5B-GGUF",
+            filename="DeepSeek-R1-Distill-Qwen-1.5B-IQ2_M.gguf",
+        )
 
     def generate(self, prompt: str) -> Iterator[str]:
-        match = re.search(r"<\｜User\｜>(.*?)<\｜Assistant\｜>", prompt)
-        query = match.group(1).strip() if match else prompt.strip()
+        stream = self.llm(prompt, max_tokens=80, stream=True)
 
-        system_info_match = re.search(r"<system> Use this information: (.*?)\n\n", prompt, re.DOTALL)
-        info = system_info_match.group(1).strip() if system_info_match else "This is a sample answer. Replace this with your answer"
-        
-        text = info
-
-        from time import sleep
-        for chunk in text.split():
-            sleep(0.1)
-            yield chunk
-            yield ' '
+        for chunk in stream:
+            yield chunk['choices'][0]['text']
