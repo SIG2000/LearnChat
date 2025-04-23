@@ -2,7 +2,7 @@ import json
 
 
 class Retrieval:
-    def __init__(self, data_path: str = "../data/newjeans.json"):
+    def __init__(self, data_path: str = "./data/Team5.json"):
         with open(data_path, "r") as file:
             data: dict[str, str] = json.load(file)
             self.data = data
@@ -23,11 +23,22 @@ class Retrieval:
         # query: this is an empty query (None of the json key matches)
         # @ return None
         # ###
-        for key in self.data:
-            if key.lower()in query.lower():
-                return f"{key}: {self.data[key]}"
-        return None
+        try:
+            # print(self.data[query])
+            return f"{query}: {self.data[query]}"
+        except KeyError as err:
+            pass
 
+        for key, val in self.data.items():
+            if key in query:
+                query = key
+                break
+
+        try:
+            # print(self.data[query])
+            return f"{query}: {self.data[query]}"
+        except KeyError:
+            return None
 
     def print_data(self) -> None:
         print(self.data)
