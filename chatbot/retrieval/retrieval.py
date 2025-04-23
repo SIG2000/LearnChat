@@ -23,7 +23,6 @@ class Retrieval:
         # query: this is an empty query (None of the json key matches)
         # @ return None
         # ###
-
         try:
             # print(self.data[query])
             return f"{query}: {self.data[query]}"
@@ -40,6 +39,7 @@ class Retrieval:
             return f"{query}: {self.data[query]}"
         except KeyError:
             return None
+
 
     def print_data(self) -> None:
         print(self.data)
